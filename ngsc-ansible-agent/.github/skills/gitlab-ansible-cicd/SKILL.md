@@ -55,16 +55,18 @@ Collect or infer:
 - manual gates and protected-environment expectations;
 - unresolved runner, permission, credential, package, image, host, or approval blockers.
 
-For a new pipeline, produce the design plan before files unless the user explicitly asks for immediate implementation.
+For a new pipeline, produce a concise design plan in chat before files unless the user explicitly asks for immediate implementation. The plan is working output, not a repository document by default. Do not create a pipeline-plan/status/checklist Markdown file merely because a design step is required.
 
-Use this plan structure:
+The chat plan should cover only what is necessary to implement safely:
 
-1. Pipeline draft status and blockers.
-2. Repository assumptions.
-3. Routing/security model.
-4. Proposed file tree.
-5. Validation and smoke-test plan.
-6. Open questions that actually block safe generation.
+1. Pipeline architecture and hard blockers.
+2. Repository assumptions that materially affect implementation.
+3. Branch/environment/runner routing and security controls.
+4. Exact files to create or modify.
+5. Validation and runtime smoke-test strategy.
+6. Blocking questions only; keep them in chat rather than creating an information-gathering document.
+
+If persistent pipeline design documentation is required, update the repository's canonical `DESIGN-PLAN.md` or existing CI specification rather than materializing these planning sections as separate documents.
 
 ## 3. GitLab compatibility and security baseline
 
@@ -334,31 +336,41 @@ Point to the owning layer: repository, runner administration, GitLab project set
 
 ## 14. Documentation behavior
 
-Update an existing README/CI document where possible. Do not create a new report Markdown file per request.
+Treat CI/CD documentation as technical specification, not training material, project-management scaffolding, or a record of the agent's process.
 
-If a dedicated CI/CD document is needed and no stable document exists, use one canonical path such as `docs/CI_CD.md` and update it in place.
+Before creating any new Markdown file, require all three conditions: the information must persist, no existing canonical document can hold it, and the new file has a distinct technical responsibility. If any condition is false, do not create the file.
 
-Document:
+Prefer, in order:
+
+- the existing `README.md` for concise installation/execution/operator information;
+- the repository's canonical `DESIGN-PLAN.md` for persistent architecture and pipeline contracts;
+- the repository's canonical `IMPLEMENTATION-SUMMARY.md` for concise implemented-state documentation;
+- an existing dedicated CI specification;
+- `docs/CI_CD.md` only when CI/CD genuinely requires its own distinct specification and no canonical CI document exists.
+
+Do not create `00-START-HERE.md`, `INFO-GATHERING-CHECKLIST.md`, `REFERENCE-LOCATIONS.md`, `DELIVERABLES.md`, `PROJECT-STATUS.md`, audience guides, navigation-only files, status dashboards, per-query reports, or duplicated planning documents unless explicitly requested or already authoritative with unique technical content.
+
+Write CI/CD specifications declaratively. State exact stages, job/file names, dependencies, runner/image mappings, branch/environment rules, variables/interfaces, artifact contracts, package coordinates, deployment gates, failure behavior, and validation commands. Avoid educational introductions, journey language, emojis, decorative checkboxes, and stakeholder-oriented narrative.
+
+For implementation-critical unknowns, use established repository values or applicable documented defaults. Otherwise record a hard constraint in the canonical specification as `BLOCKED: <required contract/value> must be provided by <owner/source>.` Do not create a separate information-gathering checklist.
+
+Success criteria must be testable and tied to exact commands or observable states.
+
+When persistent CI/CD documentation is required, document as applicable:
 
 - GitLab compatibility baseline;
+- exact pipeline stage/job graph and producer/consumer dependencies;
 - branch/environment/runner mapping;
 - protected branch/environment/approval prerequisites;
 - runner image/executor prerequisites;
 - required CI variables by metadata only, never values;
-- validation and smoke-test commands;
+- validation and smoke-test commands plus expected outcomes;
 - artifact/package retention and publication model;
 - deployment and rollback gates;
-- unresolved operational blockers and their owner.
+- hard operational blockers and their owner.
 
 ## 15. Implementation output
 
-After implementation, report:
-
-1. Implementation status and unresolved blockers.
-2. Pipeline architecture and stage flow.
-3. Files created/modified.
-4. Validation/smoke tests actually run and results.
-5. Variables/runner/project settings that an administrator must configure.
-6. Human-review gates before merge, package publication, deployment, or production promotion.
+After implementation, report in chat: files created/modified, effective pipeline architecture, validation/smoke tests actually run and results, hard blockers, administrator-owned settings, and human-review gates. Do not create separate Markdown files for these response sections.
 
 Never claim a command, smoke test, package publication, or deployment ran if it did not.

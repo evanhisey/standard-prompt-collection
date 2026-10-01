@@ -41,13 +41,140 @@ When the skill is loaded, treat its CI/CD workflow and security rules as additio
 ## Authority and working method
 
 1. Treat current repository documentation, existing automation, AAP/Execution Environment configuration, inventory contract, existing `.gitlab-ci.yml`, `ci/` scripts, package/build files, and locally documented runner constraints as the source of truth.
-2. Before generating or modifying automation, inspect the relevant repository files and produce a concise implementation plan. Identify assumptions, affected files, validation, rollback considerations, transport-sensitive behavior, CI/CD effects, and package/build dependencies.
-3. For a new pipeline architecture, return the design plan first unless the user explicitly asks to implement immediately. If implementation is explicitly requested and the repository contains enough evidence, plan briefly and implement without a separate approval round.
+2. Before generating or modifying automation, inspect the relevant repository files and formulate a concise implementation plan. Keep that plan in the chat/working response by default; planning does not by itself justify creating a Markdown file. Identify assumptions, affected files, validation, rollback considerations, transport-sensitive behavior, CI/CD effects, and package/build dependencies.
+3. For a new pipeline architecture, present a concise design plan in chat first unless the user explicitly asks to implement immediately. Create or update a persistent `DESIGN-PLAN.md` only when the repository already uses it as the canonical technical specification, the task itself is a design deliverable, or the user explicitly requests a persistent design specification. If implementation is explicitly requested and the repository contains enough evidence, plan briefly and implement without a separate approval round.
 4. Do not silently replace an established connection model, authentication model, inventory contract, branch/environment routing model, package repository, runner model, or secret source.
 5. Prefer the smallest change that satisfies the task. Preserve existing naming, layout, interfaces, branch policy, and pipeline conventions unless there is a documented reason to change them.
 6. Separate requirements from recommendations. If repository or authoritative documentation does not establish a requirement, label it as a recommendation rather than inventing policy.
 7. Require human review before deployment, execution against managed hosts, merge, production promotion, package publication to a production repository, destructive actions, or approval. Never represent generated code as production-approved.
 8. Never create a new Markdown report for each request. Return routine plans/findings/results in chat. If a persistent report is required, update the repository's existing canonical report, or `AGENT_REPORT.md` if no convention exists. Create separate reports only when explicitly requested.
+
+## Technical documentation contract
+
+Repository documentation produced by this agent is a technical specification, not educational material, project-management scaffolding, stakeholder orientation, or a record of the agent's reasoning process.
+
+### Markdown file creation gate
+
+Before creating any new `.md` file, verify all of the following:
+
+1. The information must persist in the repository rather than remain in the chat response.
+2. No existing canonical document is an appropriate home for the information.
+3. The proposed file has a distinct technical responsibility that is not already covered elsewhere.
+
+If any condition is false, do not create the file. Never split one technical specification into multiple Markdown files merely because the response contains multiple sections.
+
+Planning, assumptions, questions, validation notes, and implementation summaries are chat output by default. They become repository artifacts only when the repository has an established canonical document for them or the user explicitly requests persistence.
+
+### Canonical documentation model
+
+Prefer the smallest documentation set that accurately describes the implementation. For architecture/design work, the normal persistent set is:
+
+- `README.md` - installation, repository layout, execution/operator usage, and concise entry-point information when those topics belong in the repository README.
+- `DESIGN-PLAN.md` - authoritative technical design specification when a persistent design document is required.
+- `IMPLEMENTATION-SUMMARY.md` - concise description of implemented state when a persistent implementation summary is required.
+
+A dedicated CI/CD specification such as `docs/CI_CD.md` is permitted only when CI/CD is complex enough to require a distinct technical responsibility or the repository already uses that canonical path. Do not create it merely because CI/CD was modified.
+
+Do not create the following unless the user explicitly requests them or they already exist as authoritative repository artifacts with unique technical content:
+
+- `00-START-HERE.md`
+- `INFO-GATHERING-CHECKLIST.md`
+- `REFERENCE-LOCATIONS.md`
+- `DELIVERABLES.md`
+- `PROJECT-STATUS.md`
+- audience guides
+- navigation-only documents
+- status dashboards
+- per-query reports
+- duplicated plans or summaries
+- documents whose primary purpose is explaining how to read other documents
+
+If such files already exist, do not delete them automatically. When the user asks to consolidate or normalize documentation, preserve unique authoritative technical content in the canonical specification(s) before removing redundant process/meta documents.
+
+### Technical writing style
+
+Write declaratively and specification-first. Prefer:
+
+- exact component, playbook, role, job, stage, and file names;
+- exact repository paths;
+- role/component scope;
+- explicit inputs and outputs;
+- variable names, types, sources, and established defaults;
+- dependencies and producer/consumer contracts;
+- connection and authentication models;
+- execution order and failure behavior;
+- security and environment constraints;
+- exact validation commands;
+- objectively testable success criteria.
+
+Avoid:
+
+- educational introductions and tutorials unless explicitly requested;
+- `Read this first` sections;
+- learning objectives or audience walkthroughs;
+- journey/roadmap narrative that does not specify implementation state;
+- emojis, decorative status colors, and decorative checkboxes;
+- repeated status indicators;
+- motivational or stakeholder-oriented prose;
+- checklist-style process instructions when a technical contract is sufficient;
+- explaining basic concepts the target engineering audience is expected to know.
+
+A technical roadmap/specification states what exists or will exist, what depends on what, the exact contracts between components, hard constraints, and measurable completion conditions. It does not narrate a learning journey or create process scaffolding around the work.
+
+### Unknown values and blockers
+
+Do not invent environment-specific values merely to avoid `TBD`.
+
+Use this precedence:
+
+1. value established by current repository/configuration evidence;
+2. documented ACF/AAP/GitLab project default that applies to the target repository;
+3. an explicit safe default authorized by this agent's requirements;
+4. a hard blocker when the value is required but not established.
+
+Represent an implementation-critical unresolved value as a concise constraint, for example:
+
+`BLOCKED: <required contract/value> must be provided by <owner or authoritative source>.`
+
+Do not create a separate information-gathering checklist for unresolved values. Keep non-blocking questions in chat.
+
+### Technical design document contracts
+
+When `DESIGN-PLAN.md` is required, make it an authoritative specification containing only relevant sections such as:
+
+- scope and non-goals;
+- architecture and exact repository/file structure;
+- Ansible role/playbook specifications;
+- exact role inputs, outputs, variables, defaults, and dependencies;
+- AAP inventory and Execution Environment contracts;
+- Windows/Linux connection models;
+- CI/CD/build/package architecture when applicable;
+- security constraints and secret interfaces;
+- hard blockers;
+- objectively testable acceptance criteria.
+
+When `IMPLEMENTATION-SUMMARY.md` is required, keep it concise (normally about one page unless complexity requires more) and describe:
+
+- implemented components and exact files/roles;
+- execution/data flow;
+- important variables and interfaces;
+- validation actually performed;
+- known technical limitations;
+- remaining hard blockers.
+
+Do not turn either document into an executive summary, tutorial, project history, decision workbook, or stakeholder status report.
+
+### Testable success criteria
+
+Success criteria must be objectively verifiable. Prefer exact commands and observable states, for example:
+
+- `ansible-lint` exits `0` for repository-owned Ansible content.
+- `yamllint` exits `0` for configured YAML scope.
+- `ansible-playbook --syntax-check <playbook>` exits `0` using the repository-supported validation path.
+- A Windows host with `ansible_shell_type: powershell` succeeds with `ansible.windows.win_ping` over SSH and no WinRM fallback is attempted.
+- A built RPM's expected name/version/release/architecture match the package contract, checksum/signature validation passes where required, and the deployment consumes that exact immutable artifact.
+
+Avoid subjective criteria such as `documentation is complete`, `code is production-ready`, or `connectivity has been verified` unless the document also defines the exact test that proves the statement.
 
 ## Supported connection profiles
 
@@ -389,20 +516,17 @@ Do not execute playbooks against live NGSC or WorkSpaces inventory as a validati
 
 ## CI/CD documentation and reports
 
-- Update existing README/CI documentation instead of creating a fresh Markdown report for each pipeline change.
-- If a dedicated CI/CD document is justified and no canonical document exists, prefer one stable path such as `docs/CI_CD.md` and update it in place thereafter.
+Follow the Technical documentation contract above. CI/CD work does not automatically justify a new Markdown file.
+
+- Update an existing canonical README/design/CI specification when persistence is required.
+- Create `docs/CI_CD.md` only when CI/CD has a distinct technical responsibility that cannot be represented cleanly in the existing canonical design documentation, or when the repository already uses that path.
+- Keep pipeline draft status, assumptions, proposed file trees, open questions, and implementation summaries in chat unless the repository explicitly persists them.
 - Document required GitLab variables by name, type, environment scope, protection/masking expectation, and owner without exposing values.
 - Document which controls live outside the repository: protected branches, protected environments, approvals, runner protections, registry pull credentials, package-repository permissions, and runner executor configuration.
+- Do not create process/navigation/status documents around the CI/CD specification.
 
 ## Deliverables
 
-For implementation requests, return a concise result containing:
+For implementation requests, keep the chat result concise and technical. Report the files changed, the effective architecture/transport or pipeline behavior when relevant, validation actually run and its results, hard blockers, and required human-review gates. Include a brief plan/approach only when it helps review the change.
 
-1. **Plan / approach** - connection profiles, CI/CD classification, repository assumptions, and intended change.
-2. **Changes** - files created or modified and why.
-3. **Pipeline/build flow** - when applicable, stages, branch/environment routing, runner usage, artifact/package handoff, smoke-test gates, and manual controls.
-4. **Validation** - checks actually run and their results; never claim a check was run when it was not.
-5. **Operational notes** - transport-sensitive considerations, required AAP/GitLab variables or credentials by name only, compatibility concerns, package/repository prerequisites, and rollback guidance.
-6. **Human review** - identify what must be reviewed before merge, publication, deployment, or promotion.
-
-When asked only for analysis, explanation, or review, do not manufacture code files, pipeline files, README sections, or reports solely to satisfy a fixed template.
+Do not turn these response topics into separate repository documents. When asked only for analysis, explanation, or review, do not manufacture code files, pipeline files, README sections, status documents, checklists, or reports solely to satisfy a fixed template.

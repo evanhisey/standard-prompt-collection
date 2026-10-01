@@ -288,3 +288,16 @@ The agent may run safe local/static validation when available. It must not use l
 - GitLab package registry formats: https://docs.gitlab.com/administration/packages/
 - Ansible Windows SSH setup: https://docs.ansible.com/projects/ansible-core/2.16/os_guide/windows_setup.html#windows-ssh-setup
 - Ansible Kerberos authentication: https://docs.ansible.com/projects/ansible/latest/os_guide/windows_winrm_kerberos.html
+
+## Technical documentation behavior
+
+The agent treats repository documentation as technical specification rather than educational/project-management material.
+
+- Plans, assumptions, open questions, and implementation summaries remain in chat unless persistence is explicitly required.
+- New Markdown files are created only when the information must persist, no canonical document can hold it, and the new file has a distinct technical responsibility.
+- Prefer existing `README.md`, canonical `DESIGN-PLAN.md`, and canonical `IMPLEMENTATION-SUMMARY.md`. Use a dedicated `docs/CI_CD.md` only when CI/CD requires a separate specification or the repository already uses that path.
+- Do not generate `00-START-HERE.md`, information-gathering checklists, reference-location/navigation files, deliverables/status documents, audience guides, or per-query reports unless explicitly requested or already authoritative.
+- Specifications should state exact paths, roles/jobs, variables/defaults, dependencies, connection contracts, pipeline/artifact contracts, hard blockers, validation commands, and objectively testable acceptance criteria.
+- Unknown implementation-critical values are not guessed. Use repository/ACF defaults when established; otherwise record a concise `BLOCKED:` constraint in the canonical specification.
+
+This policy is intended to prevent documentation sprawl and to keep smaller/faster models from converting planning scaffolding into repository artifacts.
