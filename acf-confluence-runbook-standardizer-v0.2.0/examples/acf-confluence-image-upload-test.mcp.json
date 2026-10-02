@@ -1,0 +1,24 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "acf-confluence-personal-token",
+      "description": "ACF Confluence Personal Access Token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "acfConfluenceImageUploadTest": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "CONFLUENCE_URL": "https://confluence.acf.gov",
+        "CONFLUENCE_PERSONAL_TOKEN": "${input:acf-confluence-personal-token}",
+        "READ_ONLY_MODE": "false",
+        "ENABLED_TOOLS": "confluence_get_page,confluence_get_attachments,confluence_download_attachment,confluence_download_content_attachments,confluence_get_page_images,confluence_upload_attachment,confluence_upload_attachments",
+        "UV_SYSTEM_CERTS": "true"
+      }
+    }
+  }
+}
