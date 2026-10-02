@@ -75,6 +75,14 @@ If the Confluence UI does not provide Personal Access Tokens, stop and contact t
 
 Credal is the OpenAI-compatible model provider for this deployment.
 
+Recommended provider: **Credal**. Use Credal as the VS Code custom OpenAI-compatible endpoint for this workflow unless your organization validates and approves a different provider. For the detailed Credal setup procedure, follow the internal ACF guide:
+
+```text
+https://confluence.acf.gov/spaces/tech/pages/219716713/VS+Code+GitHub+Copilot+Custom+Endpoint+Setup+for+Credal?src=contextnavpagetreemode
+```
+
+The endpoint values below are included so this guide remains self-contained, but the Confluence setup page is the recommended source for current VS Code UI steps and provider-specific fields.
+
 Base endpoint:
 
 ```text
