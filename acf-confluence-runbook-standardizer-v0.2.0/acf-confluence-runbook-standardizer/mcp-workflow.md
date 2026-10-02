@@ -86,6 +86,7 @@ Use this workflow when the live template represents Brief, Prerequisites, Proced
 8. Generate a before/after summary that names the changed panel title and confirms protected macros are unchanged.
 9. Stop for explicit approval that names `confluence_update_page` before writing.
 10. After writing, retrieve raw storage and markdown, verify the changed panel, verify page location, verify the Version widget, and inspect page history/diff when available.
+11. Remove any local scratch storage file, temporary `content_file`, or generated page body file used for the write unless the user explicitly asks to retain it for audit. If retained, report the exact path and reason.
 
 Do not use loose global find/replace across the full storage body. If the storage cannot be parsed or the panel match is ambiguous, stop without writing.
 
@@ -239,6 +240,7 @@ Never expose `confluence_delete_attachment` during the initial image upload test
 8. Re-fetch and inspect the updated page.
 9. Confirm the page ID, title, space, and parent still match the approved target.
 10. Use page history/diff tools when available to verify the change.
+11. Remove any local scratch storage file, temporary `content_file`, or generated page body file used for the update unless the user explicitly asks to retain it for audit. If retained, report the exact path and reason.
 
 ## Version comments
 

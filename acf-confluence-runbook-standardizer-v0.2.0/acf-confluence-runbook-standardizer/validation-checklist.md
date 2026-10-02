@@ -58,6 +58,8 @@ Use this checklist before presenting a final draft and again after any Confluenc
 - [ ] Post-write page ID, title, space, and parent match the approved destination or target.
 - [ ] Parent children were checked after a create/copy operation when supported.
 - [ ] Post-write content matches the intended standardized draft.
+- [ ] Local scratch storage files, temporary `content_file` inputs, and generated page body files used for the write were removed, unless the user explicitly requested audit retention.
+- [ ] Any retained scratch or generated write files were reported with exact path and reason.
 - [ ] Human technical review is still required before treating the runbook as approved.
 
 ## Writer-Test Controls
@@ -81,6 +83,7 @@ Use this checklist before presenting a final draft and again after any Confluenc
 - [ ] Any use of `confluence_update_page` was explicitly approved for a panel-body update and validated with a panel-only before/after summary.
 - [ ] No full-page replacement, delete, move, restriction, comment, attachment, or Jira write tool was used.
 - [ ] Page history/version and diff were checked when available.
+- [ ] Local scratch storage files, temporary `content_file` inputs, and generated page body files used for the write were removed, unless the user explicitly requested audit retention.
 - [ ] A human inspected the rendered Confluence page in the browser.
 
 ## Image Transfer Diagnostics
