@@ -39,6 +39,20 @@ Validation: confirmed updated version number.
 
 > **Local session requirement:** Use this MCP package from a VS Code Chat **Local** session / local agent harness. Do not run Jira MCP workflows from a Copilot-hosted session unless that session type has been separately validated for the required MCP server access and tool count. Copilot-hosted sessions can conflict with MCP tool availability and model endpoint tool-count limits.
 
+> **Agent selection requirement:** For best Jira MCP behavior, start a **New Chat**, select **Local** in the Session Target picker, and choose **ACF Jira MCP Agent** before running Jira retrieval, triage, writer-test, or diagnostic workflows.
+
+Required VS Code user settings for the local harness path:
+
+```json
+{
+	"chat.defaultToCopilotHarness": false,
+	"chat.editor.preferCopilotHarness": false,
+	"chat.editor.localAgent.enabled": true
+}
+```
+
+Set these through **Command Palette -> Preferences: Open User Settings (JSON)**, run **Developer: Reload Window**, then start a new Local chat. The settings prevent VS Code from defaulting or substituting the Copilot-hosted harness when MCP work expects Local.
+
 ## Package Contents
 
 ```text

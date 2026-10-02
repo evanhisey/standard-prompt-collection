@@ -36,6 +36,26 @@ The MCP server is started by VS Code when needed. It is not a separate long-runn
 
 > **If setup or verification fails:** Stop at the failing layer and use the troubleshooting section. Do not switch authentication methods, duplicate MCP configurations, paste secrets into diagnostics, or bypass TLS verification.
 
+## 1.1 Required VS Code Chat Harness Settings
+
+Before validating Confluence MCP access, open **Command Palette -> Preferences: Open User Settings (JSON)** and confirm these settings are present:
+
+```json
+{
+  "chat.defaultToCopilotHarness": false,
+  "chat.editor.preferCopilotHarness": false,
+  "chat.editor.localAgent.enabled": true
+}
+```
+
+These settings keep MCP-backed work on the local agent harness:
+
+- `chat.defaultToCopilotHarness: false` prevents new Chat panel/editor sessions from defaulting to the Agent Host Copilot harness.
+- `chat.editor.preferCopilotHarness: false` prevents VS Code from substituting Copilot whenever **Local** otherwise would have been selected.
+- `chat.editor.localAgent.enabled: true` keeps **Local** available in the Session Target picker.
+
+After changing these settings, run **Developer: Reload Window**, start a **New Chat**, and explicitly select **Local** in the Session Target picker before Confluence MCP validation. Current VS Code builds remember the selected session target after it is chosen, but the first post-install chat should still be checked manually.
+
 ---
 
 # 1. What You Are Installing
@@ -63,6 +83,7 @@ Confirm all of the following before continuing:
 
 - [ ] Microsoft VS Code is installed.
 - [ ] VS Code Chat is available and can use custom language models in the target build.
+- [ ] User settings keep Chat on the Local harness and leave **Local** available in the Session Target picker.
 - [ ] You can reach `https://confluence.acf.gov` from the workstation using the required ACF network/VPN connection.
 - [ ] You can sign in to Confluence normally.
 - [ ] You are allowed to create or use a Confluence Personal Access Token (PAT).

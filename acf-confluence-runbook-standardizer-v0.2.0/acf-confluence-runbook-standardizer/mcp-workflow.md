@@ -83,10 +83,12 @@ Use this workflow when the live template represents Brief, Prerequisites, Proced
 5. Replace only that panel's `ac:rich-text-body` content.
 6. Preserve panel macro IDs, panel styling parameters, page layout, images, links, and all unapproved panel bodies.
 7. Preserve the `Version` panel and nested `change-history` macro unchanged.
-8. Generate a before/after summary that names the changed panel title and confirms protected macros are unchanged.
-9. Stop for explicit approval that names `confluence_update_page` before writing.
-10. After writing, retrieve raw storage and markdown, verify the changed panel, verify page location, verify the Version widget, and inspect page history/diff when available.
-11. Remove any local scratch storage file, temporary `content_file`, or generated page body file used for the write unless the user explicitly asks to retain it for audit. If retained, report the exact path and reason.
+8. If a local scratch storage file or `content_file` is needed, write it as UTF-8 without BOM. In Windows PowerShell 5.1, do not use `Set-Content -Encoding utf8` for Confluence storage files because it writes a BOM; use a UTF8Encoding instance with BOM disabled or another verified no-BOM writer.
+9. Before writing, verify the storage body starts with the expected Confluence root element, such as `<ac:layout>` or `<p>`, and that no leading BOM, mojibake, or other visible garbage text appears before the first storage element.
+10. Generate a before/after summary that names the changed panel title and confirms protected macros are unchanged.
+11. Stop for explicit approval that names `confluence_update_page` before writing.
+12. After writing, retrieve raw storage and markdown, verify the changed panel, verify page location, verify the Version widget, confirm no leading BOM/mojibake text rendered before the first panel or heading, and inspect page history/diff when available.
+13. Remove any local scratch storage file, temporary `content_file`, or generated page body file used for the write unless the user explicitly asks to retain it for audit. If retained, report the exact path and reason.
 
 Do not use loose global find/replace across the full storage body. If the storage cannot be parsed or the panel match is ambiguous, stop without writing.
 

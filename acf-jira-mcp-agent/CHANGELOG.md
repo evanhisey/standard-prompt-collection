@@ -26,3 +26,4 @@ Initial package draft.
 - Completed the approved live deletion test for disposable story `ATO-1469`, verified the key absent afterward, and confirmed delete-tool isolation from normal read-only and writer-test profiles.
 - Transitioned the package from active development mode to diagnostic/improvement mode, making `diagnostic-improvement-prompt.md` the primary maintenance prompt.
 - Removed low-value historical active-development files after closeout cleanup: the temporary writer development prompt and detailed Stage 12-21 evidence log.
+- Added required VS Code Local harness settings and explicit **ACF Jira MCP Agent** selection guidance for Jira MCP validation and best runtime behavior.

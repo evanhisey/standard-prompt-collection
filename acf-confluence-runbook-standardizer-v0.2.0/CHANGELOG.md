@@ -5,6 +5,8 @@
 - Added a copy-ready `acf-confluence-runbook-standardizer/` skill directory containing only the runtime skill payload files and removed duplicate runtime files from the package root.
 - Marked the writer and image handling stages as complete after human verification.
 - Added post-write cleanup guidance for local scratch storage files, temporary `content_file` inputs, and generated page body files.
+- Added required VS Code Local harness settings for Confluence MCP validation and writer/image workflows.
+- Added a storage-write guard to prevent UTF-8 BOM/mojibake text from being published before the first Confluence element.
 - Removed the development-roadmap dependency from the skill package and consolidated future diagnostic guidance into the diagnostic prompt.
 - Updated installation guidance from review draft wording to the final validated workflow.
 - Added explicit VS Code Copilot skill installation instructions.

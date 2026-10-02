@@ -6,6 +6,18 @@ This package contains VS Code Chat agent instructions for standardizing ACF Conf
 
 > **Local session requirement:** Use this MCP package from a VS Code Chat **Local** session / local agent harness. Do not run Confluence MCP workflows from a Copilot-hosted session unless that session type has been separately validated for the required MCP server access and tool count. Copilot-hosted sessions can conflict with MCP tool availability and model endpoint tool-count limits.
 
+Required VS Code user settings for the local harness path:
+
+```json
+{
+	"chat.defaultToCopilotHarness": false,
+	"chat.editor.preferCopilotHarness": false,
+	"chat.editor.localAgent.enabled": true
+}
+```
+
+Set these through **Command Palette -> Preferences: Open User Settings (JSON)**, run **Developer: Reload Window**, then start a **New Chat** and explicitly select **Local**. The settings prevent VS Code from defaulting or substituting the Copilot-hosted harness when MCP work expects Local.
+
 ## Start here
 
 For an end-user installation, follow:

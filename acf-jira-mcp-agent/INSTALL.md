@@ -36,6 +36,26 @@ The MCP server is started by VS Code when needed. It is not a separate long-runn
 
 > Local session requirement: Use this MCP package from a VS Code Chat **Local** session / local agent harness. Do not use a Copilot-hosted session for Jira MCP validation or writer development unless that session type has been separately validated for the required MCP server access and tool count. Copilot-hosted sessions can conflict with MCP tool availability and model endpoint tool-count limits.
 
+## 1.1 Required VS Code Chat Harness Settings
+
+Before validating Jira MCP access, open **Command Palette -> Preferences: Open User Settings (JSON)** and confirm these settings are present:
+
+```json
+{
+  "chat.defaultToCopilotHarness": false,
+  "chat.editor.preferCopilotHarness": false,
+  "chat.editor.localAgent.enabled": true
+}
+```
+
+These settings keep MCP-backed work on the local agent harness:
+
+- `chat.defaultToCopilotHarness: false` prevents new Chat panel/editor sessions from defaulting to the Agent Host Copilot harness.
+- `chat.editor.preferCopilotHarness: false` prevents VS Code from substituting Copilot whenever **Local** otherwise would have been selected.
+- `chat.editor.localAgent.enabled: true` keeps **Local** available in the Session Target picker.
+
+After changing these settings, run **Developer: Reload Window**, start a **New Chat**, explicitly select **Local** in the Session Target picker, and select **ACF Jira MCP Agent** for Jira MCP work. Current VS Code builds remember the selected session target after it is chosen, but the first post-install chat should still be checked manually.
+
 ## 1. What You Are Installing
 
 This deployment has four parts:
@@ -60,6 +80,7 @@ The validated runtime selection is:
 - Model: **Credal custom model**
 - MCP server for read-only work: **acf_jira**
 - MCP server for approved writer tests: **acfJiraWriterTest**
+- Selected custom agent for Jira work: **ACF Jira MCP Agent**
 
 Do not claim another harness is supported for authenticated Jira MCP unless it is separately validated in the target environment.
 
@@ -69,7 +90,9 @@ Confirm the following before continuing:
 
 - [ ] Microsoft VS Code is installed.
 - [ ] VS Code Chat can run a Local session / local agent harness for MCP-backed workflows.
+- [ ] User settings keep Chat on the Local harness and leave **Local** available in the Session Target picker.
 - [ ] VS Code Chat can discover custom agents and skills in the selected target location.
+- [ ] The first post-install New Chat explicitly selects **Local** and **ACF Jira MCP Agent** before Jira MCP validation.
 - [ ] Credal is configured as the approved OpenAI-compatible model provider.
 - [ ] You can reach `https://jira.acf.gov/` from the workstation using the required ACF network/VPN connection.
 - [ ] You can sign in to Jira normally.

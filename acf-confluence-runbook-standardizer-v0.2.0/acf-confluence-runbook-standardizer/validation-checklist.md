@@ -44,6 +44,7 @@ Use this checklist before presenting a final draft and again after any Confluenc
 - [ ] Version/history presentation was not manually fabricated.
 - [ ] If the page uses panel macros, only the approved panel body changed.
 - [ ] The Version panel and nested `change-history` macro were preserved unchanged unless a separate template change was explicitly approved.
+- [ ] Storage updates did not introduce leading BOM, mojibake, or other visible garbage text before the first Confluence element.
 
 ## Publishing
 
@@ -55,6 +56,7 @@ Use this checklist before presenting a final draft and again after any Confluenc
 - [ ] Current page metadata/version was retrieved before the write when updating an existing page.
 - [ ] A meaningful version comment was supplied when supported.
 - [ ] The page was retrieved again after the write.
+- [ ] Post-write rendered content has no visible `ï»¿`, `Ã¯Â»Â¿`, or similar encoded BOM text before the first panel or heading.
 - [ ] Post-write page ID, title, space, and parent match the approved destination or target.
 - [ ] Parent children were checked after a create/copy operation when supported.
 - [ ] Post-write content matches the intended standardized draft.
