@@ -86,29 +86,47 @@ Open the repository in VS Code, open Chat, and select **NGSC Ansible Automation 
 
 ## Optional installation: user-wide agent
 
-To make the Ansible agent available across repositories, copy the agent to:
+To make the Ansible agent available across repositories, copy the `.agent.md` file directly into the VS Code user `prompts` folder.
+
+On Linux:
 
 ```text
-~/.copilot/agents/ngsc-ansible-automation.agent.md
+~/.config/Code/User/prompts/ngsc-ansible-automation.agent.md
+```
+
+```bash
+mkdir -p "$HOME/.config/Code/User/prompts"
+cp "/path/to/standard-prompt-collection/ngsc-ansible-agent/.github/agents/ngsc-ansible-automation.agent.md" "$HOME/.config/Code/User/prompts/ngsc-ansible-automation.agent.md"
 ```
 
 On Windows:
 
 ```text
-%USERPROFILE%\.copilot\agents\ngsc-ansible-automation.agent.md
+%APPDATA%\Code\User\prompts\ngsc-ansible-automation.agent.md
 ```
 
-For CI/CD behavior across repositories, the skill can also be installed user-wide at:
+```powershell
+$sourceAgent = "C:\Path\To\standard-prompt-collection\ngsc-ansible-agent\.github\agents\ngsc-ansible-automation.agent.md"
+$targetAgent = Join-Path $env:APPDATA "Code\User\prompts\ngsc-ansible-automation.agent.md"
+New-Item -ItemType Directory -Force -Path (Split-Path $targetAgent) | Out-Null
+Copy-Item -Force -Path $sourceAgent -Destination $targetAgent
+```
+
+Do not create a nested `agents/` directory inside the VS Code user `prompts` folder. User/global VS Code customization discovers `.agent.md`, `.prompt.md`, and `.instructions.md` files from that folder.
+
+For CI/CD behavior, install the bundled skill in each repository or workspace where it is approved, for example:
 
 ```text
-~/.copilot/skills/gitlab-ansible-cicd/SKILL.md
+<repo-root>/.github/skills/gitlab-ansible-cicd/SKILL.md
 ```
 
-On Windows:
+or:
 
 ```text
-%USERPROFILE%\.copilot\skills\gitlab-ansible-cicd\SKILL.md
+<repo-root>/.agents/skills/gitlab-ansible-cicd/SKILL.md
 ```
+
+Do not copy bundled skills into the VS Code user `prompts` folder. Skills belong in the target repository or workspace customization path.
 
 A useful mixed deployment is:
 

@@ -4,6 +4,8 @@ This repository is a source collection for reusable VS Code Copilot agents and s
 
 The directories in this repository are package sources. Do not treat this repository's `.github` directory as the installation target. Copy the package you need into the target workspace or user-level customization location required by your VS Code/Copilot build.
 
+For VS Code user/global custom agents, copy the `.agent.md` file directly into the user `prompts` folder: `%APPDATA%\Code\User\prompts\` on Windows or `~/.config/Code/User/prompts/` on Linux. Do not place global agents under a nested `agents/` directory, and do not copy skills into the user `prompts` folder. Skills belong in the target repository or workspace under `.github/skills/` or `.agents/skills/`.
+
 ## Directory Overview
 
 | Directory | Type | Purpose |

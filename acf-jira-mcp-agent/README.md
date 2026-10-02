@@ -111,6 +111,8 @@ agents/acf-jira-mcp-agent.agent.md -> <approved-agent-destination>/acf-jira-mcp-
 skills/acf-jira-mcp-workflow/ -> <approved-skill-destination>/acf-jira-mcp-workflow/
 ```
 
+For a VS Code user/global agent install, the `.agent.md` file goes directly in the user `prompts` folder: `%APPDATA%\Code\User\prompts\` on Windows or `~/.config/Code/User/prompts/` on Linux. Do not create a nested `agents/` folder there, and do not copy bundled skills into the user `prompts` folder. Keep the bundled skill installed in the target repository or workspace.
+
 Then configure the Jira MCP profile in the VS Code user/global MCP configuration as described in `INSTALL.md`.
 
 ## Diagnostic and Improvement Source Mode

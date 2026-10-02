@@ -149,10 +149,12 @@ Repo or workspace agent customization:
   <target-repo-or-workspace>/.agents/agents/
   <target-repo-or-workspace>/.agents/skills/
 
-User/global customization:
-  <user-customizations>/agents/
-  <user-customizations>/skills/
+User/global agent customization:
+  Windows: %APPDATA%\Code\User\prompts\acf-jira-mcp-agent.agent.md
+  Linux:   ~/.config/Code/User/prompts/acf-jira-mcp-agent.agent.md
 ```
+
+VS Code user/global customization discovers `.agent.md`, `.prompt.md`, and `.instructions.md` files from the user `prompts` folder. Do not place the global agent under a nested `agents/` directory. Do not copy the bundled `acf-jira-mcp-workflow` skill into the user `prompts` folder. Install the skill in the target repository or workspace, such as `.github/skills/` or `.agents/skills/`.
 
 Set `$sourceRoot` / `source_root` to the actual local path of this package. Set the destination variables to the approved paths for the install scope you are using before copying.
 
@@ -170,9 +172,9 @@ $sourceRoot = "C:\Path\To\standard-prompt-collection\acf-jira-mcp-agent"
 # $targetAgents = "C:\Path\To\TargetRepoOrWorkspace\.agents\agents"
 # $targetSkills = "C:\Path\To\TargetRepoOrWorkspace\.agents\skills"
 
-# User/global customization example:
-$targetAgents = "C:\Path\To\UserCustomizations\agents"
-$targetSkills = "C:\Path\To\UserCustomizations\skills"
+# User/global agent with workspace skill example:
+$targetAgents = Join-Path $env:APPDATA "Code\User\prompts"
+$targetSkills = "C:\Path\To\TargetRepoOrWorkspace\.github\skills"
 
 New-Item -ItemType Directory -Force -Path $targetAgents | Out-Null
 New-Item -ItemType Directory -Force -Path $targetSkills | Out-Null
@@ -200,9 +202,9 @@ source_root="/path/to/standard-prompt-collection/acf-jira-mcp-agent"
 # target_agents="/path/to/target-repo-or-workspace/.agents/agents"
 # target_skills="/path/to/target-repo-or-workspace/.agents/skills"
 
-# User/global customization example:
-target_agents="/path/to/user-customizations/agents"
-target_skills="/path/to/user-customizations/skills"
+# User/global agent with workspace skill example:
+target_agents="$HOME/.config/Code/User/prompts"
+target_skills="/path/to/target-repo-or-workspace/.github/skills"
 
 mkdir -p "$target_agents" "$target_skills"
 cp "$source_root/agents/acf-jira-mcp-agent.agent.md" "$target_agents/acf-jira-mcp-agent.agent.md"
