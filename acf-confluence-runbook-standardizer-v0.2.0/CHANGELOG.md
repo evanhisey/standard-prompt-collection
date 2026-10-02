@@ -7,6 +7,7 @@
 - Added post-write cleanup guidance for local scratch storage files, temporary `content_file` inputs, and generated page body files.
 - Added required VS Code Local harness settings for Confluence MCP validation and writer/image workflows.
 - Added a storage-write guard to prevent UTF-8 BOM/mojibake text from being published before the first Confluence element.
+- Added `change-history` macro `limit` preservation guidance, with missing limits defaulting to `3` displayed versions.
 - Removed the development-roadmap dependency from the skill package and consolidated future diagnostic guidance into the diagnostic prompt.
 - Updated installation guidance from review draft wording to the final validated workflow.
 - Added explicit VS Code Copilot skill installation instructions.

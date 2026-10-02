@@ -227,6 +227,8 @@ Preserve the template's native Version presentation. Do not fabricate version hi
 
 In the current live template, Version is a panel macro containing a nested `change-history` macro. Treat that widget as protected storage. A writer may validate that it exists and that page metadata/history increments after a write, but must not manually update or replace the Version panel body during Brief, Prerequisites, or Procedure updates.
 
+When preserving the `change-history` macro, also preserve its `limit` parameter, which controls the number of versions displayed. If the macro has no `limit` parameter, add `<ac:parameter ac:name="limit">3</ac:parameter>` so Confluence displays three versions by default. Do not allow a storage rewrite to drop the parameter and fall back to a wider Confluence default.
+
 ## MCP tool workflow
 
 Use the exact tools that are available from the configured Confluence MCP server. The expected mcp-atlassian tools are described in `mcp-workflow.md`.

@@ -44,6 +44,7 @@ Use this checklist before presenting a final draft and again after any Confluenc
 - [ ] Version/history presentation was not manually fabricated.
 - [ ] If the page uses panel macros, only the approved panel body changed.
 - [ ] The Version panel and nested `change-history` macro were preserved unchanged unless a separate template change was explicitly approved.
+- [ ] The `change-history` macro retained its existing `limit` parameter, or a missing `limit` parameter was added with value `3`.
 - [ ] Storage updates did not introduce leading BOM, mojibake, or other visible garbage text before the first Confluence element.
 
 ## Publishing
@@ -85,6 +86,7 @@ Use this checklist before presenting a final draft and again after any Confluenc
 - [ ] Any use of `confluence_update_page` was explicitly approved for a panel-body update and validated with a panel-only before/after summary.
 - [ ] No full-page replacement, delete, move, restriction, comment, attachment, or Jira write tool was used.
 - [ ] Page history/version and diff were checked when available.
+- [ ] The Version panel `change-history` macro still uses the intended displayed-version `limit` after the write.
 - [ ] Local scratch storage files, temporary `content_file` inputs, and generated page body files used for the write were removed, unless the user explicitly requested audit retention.
 - [ ] A human inspected the rendered Confluence page in the browser.
 
