@@ -32,6 +32,8 @@ The MCP server is started by VS Code when needed. It is not a separate long-runn
 
 > **Security requirement:** Do not paste a Credal token or Confluence Personal Access Token (PAT) into this guide, a Git repository, model JSON, `mcp.json` as a literal value, an environment file, a prompt, a ticket, a screenshot, logs, or source code.
 
+> **Local session requirement:** Use this MCP package from a VS Code Chat **Local** session / local agent harness. Do not use a Copilot-hosted session for Confluence MCP validation, writer testing, or image handling unless that session type has been separately validated for the required MCP server access and tool count. Copilot-hosted sessions can conflict with MCP tool availability and model endpoint tool-count limits.
+
 > **If setup or verification fails:** Stop at the failing layer and use the troubleshooting section. Do not switch authentication methods, duplicate MCP configurations, paste secrets into diagnostics, or bypass TLS verification.
 
 ---
@@ -200,7 +202,13 @@ Open the global MCP configuration using the VS Code command for your build. In v
 MCP: Open User Configuration
 ```
 
-If that exact command is unavailable, use the MCP configuration command exposed by the target VS Code build, or edit the global path above directly.
+If that exact command is unavailable, use the MCP configuration command exposed by the target VS Code build, or open the global user configuration file directly with the VS Code `code` CLI:
+
+```powershell
+code "$env:APPDATA\Code\User\mcp.json"
+```
+
+If the `code` command is not on `PATH`, run **Shell Command: Install 'code' command in PATH** from the VS Code Command Palette, or edit the global path above directly.
 
 Do not create a duplicate `acf_confluence` or `acfConfluenceImageReadTest` server definition in:
 
@@ -214,6 +222,8 @@ A workspace `.vscode/mcp.json` may exist for other servers, but it should not co
 ## 5.1 Confirm The Tool Allowlist For The Installed Version
 
 Do not expose all `mcp-atlassian` tools. During validation, the server initially reported `Discovered 20 tools`, while the Credal/OpenAI-compatible endpoint later rejected a request containing 145 tools because the endpoint accepted a maximum of 128. The MCP log also reported that `TOOLSETS` was unset and all applicable toolsets were exposed.
+
+This is one reason the validated path requires a VS Code Chat Local session / local agent harness. Do not switch to a Copilot-hosted session or broaden tool exposure to work around session limitations. Keep the MCP profiles local, explicit, and narrowly allowlisted.
 
 Before publishing or approving this guide for a managed environment, verify the exact tool names exposed by the installed `mcp-atlassian` version. Use the MCP startup output and VS Code's server listing/output views as evidence. Remove unavailable or renamed tools, and do not include Jira tools unless the deployment explicitly requires Jira.
 

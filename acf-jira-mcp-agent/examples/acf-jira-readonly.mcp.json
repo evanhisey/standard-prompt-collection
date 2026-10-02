@@ -1,0 +1,26 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "acf-jira-personal-token",
+      "description": "ACF Jira Personal Access Token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "acf_jira": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "JIRA_URL": "https://jira.acf.gov/",
+        "JIRA_PERSONAL_TOKEN": "${input:acf-jira-personal-token}",
+        "READ_ONLY_MODE": "true",
+        "ENABLED_TOOLS": "jira_search,jira_get_issue,jira_get_project",
+        "ACF_JIRA_DEFAULT_PROJECT": "",
+        "ACF_JIRA_DEFAULT_BOARD": "",
+        "UV_SYSTEM_CERTS": "true"
+      }
+    }
+  }
+}

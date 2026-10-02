@@ -1,0 +1,26 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "acf-jira-personal-token",
+      "description": "ACF Jira Personal Access Token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "acfJiraDeletionTest": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "JIRA_URL": "https://jira.acf.gov/",
+        "JIRA_PERSONAL_TOKEN": "${input:acf-jira-personal-token}",
+        "READ_ONLY_MODE": "false",
+        "ENABLED_TOOLS": "jira_search,jira_get_issue,jira_delete_issue",
+        "ACF_JIRA_DEFAULT_PROJECT": "ATO",
+        "ACF_JIRA_DEFAULT_BOARD": "ATO board",
+        "UV_SYSTEM_CERTS": "true"
+      }
+    }
+  }
+}

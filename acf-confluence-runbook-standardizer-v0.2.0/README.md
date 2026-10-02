@@ -4,6 +4,8 @@
 
 This package contains VS Code Chat agent instructions for standardizing ACF Confluence operational runbooks against the NGSC Operation RunBook Template while using local Confluence MCP profiles for live retrieval, controlled writer tests, and controlled image handling.
 
+> **Local session requirement:** Use this MCP package from a VS Code Chat **Local** session / local agent harness. Do not run Confluence MCP workflows from a Copilot-hosted session unless that session type has been separately validated for the required MCP server access and tool count. Copilot-hosted sessions can conflict with MCP tool availability and model endpoint tool-count limits.
+
 ## Start here
 
 For an end-user installation, follow:
@@ -14,6 +16,7 @@ It now contains the validated VS Code Chat + Credal + Confluence MCP instruction
 
 - installing and verifying `uv` / `uvx`;
 - testing `mcp-atlassian` before starting the MCP server;
+- using the Local session target / local agent harness for MCP-backed work;
 - configuring Credal as the VS Code custom OpenAI-compatible model provider;
 - storing the Credal token through VS Code's language-model secret mechanism;
 - configuring the global VS Code `mcp.json` server definition for `acf_confluence`;
