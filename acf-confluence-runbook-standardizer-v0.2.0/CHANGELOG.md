@@ -2,6 +2,7 @@
 
 ## 1.0.0 - Validated writer and image workflow
 
+- Added a copy-ready `acf-confluence-runbook-standardizer/` skill directory containing only the runtime skill payload files and removed duplicate runtime files from the package root.
 - Marked the writer and image handling stages as complete after human verification.
 - Removed the development-roadmap dependency from the skill package and consolidated future diagnostic guidance into the diagnostic prompt.
 - Updated installation guidance from review draft wording to the final validated workflow.

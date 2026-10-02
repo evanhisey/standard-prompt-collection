@@ -23,7 +23,7 @@ It now contains the validated VS Code Chat + Credal + Confluence MCP instruction
 - optionally installing the separate `acfConfluenceWriterTest` MCP profile for approved writer testing;
 - validating access against Confluence template page `115220454`;
 - troubleshooting PATH, authentication, TLS, tool visibility, tool invocation, and model endpoint tool-limit problems.
-- installing the packaged `SKILL.md` as a VS Code Copilot skill.
+- installing the packaged `acf-confluence-runbook-standardizer/` VS Code Copilot skill directory.
 
 ## What this version does
 
@@ -40,19 +40,22 @@ It now contains the validated VS Code Chat + Credal + Confluence MCP instruction
 
 ```text
 acf-confluence-runbook-standardizer/
+├── acf-confluence-runbook-standardizer/
+│   ├── SKILL.md
+│   ├── diagnostic-improvement-prompt.md
+│   ├── mcp-workflow.md
+│   ├── runbook-standard.md
+│   └── validation-checklist.md
 ├── README.md
 ├── INSTALL.md
 ├── CHANGELOG.md
-├── SKILL.md
 ├── examples/
 │   ├── acf-confluence-image-upload-test.mcp.json
 │   └── acf-confluence-writer-test.mcp.json
-├── diagnostic-improvement-prompt.md
-├── eval-cases.md
-├── mcp-workflow.md
-├── runbook-standard.md
-└── validation-checklist.md
+└── eval-cases.md
 ```
+
+The nested `acf-confluence-runbook-standardizer/` directory is the copy-ready VS Code skill payload. Copy that directory to the target workspace skill location. The package root also keeps maintainer documentation, examples, changelog, and evaluation cases that are useful for release work but are not required at runtime.
 
 ## Quick installation summary
 
@@ -67,7 +70,7 @@ The detailed steps are in `INSTALL.md`. At a high level:
 7. Confirm the MCP can retrieve Confluence page `115220454`.
 8. Confirm the image-read profile can list and retrieve the six template images from page `115220454`.
 9. Run the read-only validation prompts from `INSTALL.md`.
-10. Install the skill package in the target workspace under `.github/skills/acf-confluence-runbook-standardizer/` or the approved workspace skill location for the target VS Code build.
+10. Copy the nested `acf-confluence-runbook-standardizer/` skill directory to the target workspace under `.github/skills/acf-confluence-runbook-standardizer/` or the approved workspace skill location for the target VS Code build.
 11. If writer testing is approved, add the separate `acfConfluenceWriterTest` profile from `INSTALL.md` without changing the read-only profiles.
 
 ## First skill test
@@ -86,7 +89,7 @@ Show the proposed standardized runbook, missing information, change summary, and
 
 When a user encounters an installation/MCP problem, use:
 
-**[`diagnostic-improvement-prompt.md`](diagnostic-improvement-prompt.md)**
+**[`acf-confluence-runbook-standardizer/diagnostic-improvement-prompt.md`](acf-confluence-runbook-standardizer/diagnostic-improvement-prompt.md)**
 
 The prompt is designed to:
 
@@ -101,7 +104,7 @@ The prompt is designed to:
 
 Do not use production publishing as the first test. Keep the normal review profile read-only.
 
-If writer testing is authorized, use the separately reviewed `acfConfluenceWriterTest` MCP profile with only the minimum required write tools. See `examples/acf-confluence-writer-test.mcp.json`, `examples/acf-confluence-image-upload-test.mcp.json`, and `mcp-workflow.md`.
+If writer testing is authorized, use the separately reviewed `acfConfluenceWriterTest` MCP profile with only the minimum required write tools. See `examples/acf-confluence-writer-test.mcp.json`, `examples/acf-confluence-image-upload-test.mcp.json`, and `acf-confluence-runbook-standardizer/mcp-workflow.md`.
 
 ## Review status
 

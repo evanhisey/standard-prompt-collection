@@ -362,7 +362,24 @@ validation-checklist.md
 diagnostic-improvement-prompt.md
 ```
 
-Keep the supporting files with `SKILL.md`; the skill explicitly reads them during runbook transformation, MCP writes, validation, and troubleshooting.
+For simple installation from this package, copy the nested source directory:
+
+```text
+acf-confluence-runbook-standardizer/
+```
+
+to the target skill location so the result is:
+
+```text
+<target-workspace>/.github/skills/acf-confluence-runbook-standardizer/
+├── SKILL.md
+├── runbook-standard.md
+├── mcp-workflow.md
+├── validation-checklist.md
+└── diagnostic-improvement-prompt.md
+```
+
+Keep the supporting files with `SKILL.md`; the skill explicitly reads them during runbook transformation, MCP writes, validation, and troubleshooting. Do not include maintainer-only files such as `eval-cases.md` in the installed skill unless the user is actively testing or developing the skill package.
 
 After installing or updating the skill, start a new VS Code Chat session so the updated skill description and instructions can be discovered. Use this smoke-test prompt:
 

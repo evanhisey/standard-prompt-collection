@@ -193,7 +193,7 @@ Do not implement a documentation, skill, or configuration change merely because 
 After the issue is resolved and the proposed improvement is approved:
 
 1. update `INSTALL.md` or the appropriate reference file;
-2. add the regression case to `references/eval-cases.md`;
+2. add the regression case to `eval-cases.md`;
 3. increment the package version/changelog;
 4. rerun the normal read-only installation and page `115220454` tests;
 5. have a human review the updated package before distribution.
